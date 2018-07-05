@@ -31,8 +31,9 @@ X = [ones(m, 1) X];
 %       
 
 X_p = X*all_theta';
+% X_p(1:3,:)
 for i = 1:size(X_p,1)
-    max_value = 0;
+    max_value = -10000;
     max_index = 0;
     for j = 1:size(X_p,2)
         if X_p(i,j) > max_value
