@@ -51,12 +51,13 @@ all_theta = zeros(num_labels, n + 1);
 % Add ones to the X data matrix
 X = [ones(m, 1) X];
 
-options = optimset('GradObj', 'on', 'MaxIter', 300);
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+
+initial_theta = zeros(n+1,1);
 
 for i = 1:num_labels
-    initial_theta_i = all_theta(i,:)';
-    [grad] = fmincg(@(t)(lrCostFunction(t,X,(y==i),lambda)), initial_theta_i,options);
-    all_theta(i,:) = grad';
+    [theta] = fmincg(@(t)(lrCostFunction(t,X,(y==i),lambda)), initial_theta,options);
+    all_theta(i,:) = theta';
 end
     
 

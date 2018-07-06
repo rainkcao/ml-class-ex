@@ -31,18 +31,8 @@ X = [ones(m, 1) X];
 %       
 
 X_p = X*all_theta';
-% X_p(1:3,:)
-for i = 1:size(X_p,1)
-    max_value = -10000;
-    max_index = 0;
-    for j = 1:size(X_p,2)
-        if X_p(i,j) > max_value
-            max_value = X_p(i,j);
-            max_index = j;
-        end    
-    end
-    p(i,1) = max_index;
-end
+[value,p] = max(X_p,[],2);
+
 
 
 % =========================================================================

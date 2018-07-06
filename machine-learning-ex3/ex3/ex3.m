@@ -86,3 +86,11 @@ pred = predictOneVsAll(all_theta, X);
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 
+% *************************************
+%              error!!!
+% *************************************
+% my finally pred is 94.78%
+% epected pred is 94.9%
+% *************************************
+
+
