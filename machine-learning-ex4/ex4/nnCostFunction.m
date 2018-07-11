@@ -64,7 +64,37 @@ Theta2_grad = zeros(size(Theta2));
 
 
 
+for i = 1:m
+    a1 = [1 X(i,:)]';
+    z2 = Theta1*a1;
+    a2 = [1;sigmoid(z2)];
+    z3 = Theta2*a2;
+    a3 = sigmoid(z3);
+    j_i = 0;
+    for k = 1:num_labels
+        y_i = (y==k);
+        j_i = j_i + (-y_i(i)*log(a3(k))-(1-y_i(i))*log(1-a3(k)));
+    end
+    J = J + j_i;
+end
+J = J/m;
 
+% Regularized
+
+reg = 0
+
+for i = 1:size(Theta1,1)
+    for j = 2:size(Theta1,2)
+       reg = reg + Theta1(i,j)*Theta1(i,j);
+    end
+end
+for i = 1:size(Theta2,1)
+    for j = 2:size(Theta2,2)
+       reg = reg + Theta2(i,j)*Theta2(i,j);
+    end
+end
+
+J = J + reg*lambda/2/m;
 
 
 
