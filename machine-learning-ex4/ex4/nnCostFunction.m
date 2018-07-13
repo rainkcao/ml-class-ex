@@ -62,51 +62,41 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+a1 = [ones(m,1) X]';              % size = 401*m
+z2 = Theta1 * a1;                 % size = 26*m
+a2 = [ones(1,m); sigmoid(z2)];    % size = 26*m
+z3 = Theta2 * a2;                 % size = 10*m
+a3 = sigmoid(z3);                 % size = 10*m
 
-
+y_vect = zeros(num_labels,m);
 for i = 1:m
-    a1 = [1 X(i,:)]';
-    z2 = Theta1*a1;
-    a2 = [1;sigmoid(z2)];
-    z3 = Theta2*a2;
-    a3 = sigmoid(z3);
-    j_i = 0;
-    for k = 1:num_labels
-        y_i = (y==k);
-        j_i = j_i + (-y_i(i)*log(a3(k))-(1-y_i(i))*log(1-a3(k)));
-    end
-    J = J + j_i;
-end
-J = J/m;
-
-% Regularized
-
-reg = 0
-
-for i = 1:size(Theta1,1)
-    for j = 2:size(Theta1,2)
-       reg = reg + Theta1(i,j)*Theta1(i,j);
-    end
-end
-for i = 1:size(Theta2,1)
-    for j = 2:size(Theta2,2)
-       reg = reg + Theta2(i,j)*Theta2(i,j);
-    end
+    y_vect(y(i),i) = 1;
 end
 
-J = J + reg*lambda/2/m;
+J = J + (sum(sum(-y_vect.*log(a3)-(1-y_vect).*log(1-a3))))/m;
+J = J + ((sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)))*lambda/2/m);
+
+% Theta1 , size = 25*401
+% Theta2 , size = 10*26
+
+Delta1 = zeros(size(Theta1));
+Delta2 = zeros(size(Theta2));
+for i = 1:m
+    delta3 = a3(:,i) - y_vect(:,i);     % size = 10*1
+    T = Theta2'*delta3;                 % size = 26*1
+    delta2 = T(2:end).*sigmoidGradient(z2(:,i));  % size = 25*1
+    Delta2 = Delta2 + delta3*a2(:,i)';  % size = 10*26
+    Delta1 = Delta1 + delta2*a1(:,i)';  % size = 25*401
+end
 
 
+Theta2_grad = Delta2/m;  
+Theta1_grad = Delta1/m;  
 
+%regularization gradient  
 
-
-
-
-
-
-
-
-
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + (lambda/m)*Theta2(:,2:end);
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + (lambda/m)*Theta1(:,2:end);
 
 
 
