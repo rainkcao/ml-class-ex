@@ -16,9 +16,9 @@ sim = 0;
 %
 %
 
-m = size(x1, 1)
-n = size(x1, 2)
-sim = exp(-sum((x1-x2).^2)/2/sigma^2)
+m = size(x1, 1);
+n = size(x1, 2);
+sim = exp(-sum((x1-x2).^2)/2/sigma^2);
 
 
 
