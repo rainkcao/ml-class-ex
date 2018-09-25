@@ -24,7 +24,7 @@ fprintf('Loading movie ratings dataset.\n\n');
 %  Load data
 load ('ex8_movies.mat');
 
-%  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies on
+%  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies on 
 %  943 users
 %
 %  R is a 1682x943 matrix, where R(i,j) = 1 if and only if user j gave a
@@ -40,33 +40,33 @@ ylabel('Movies');
 xlabel('Users');
 
 fprintf('\nProgram paused. Press enter to continue.\n');
-% pause;
+pause;
 
-% %% ============ Part 2: Collaborative Filtering Cost Function ===========
-% %  You will now implement the cost function for collaborative filtering.
-% %  To help you debug your cost function, we have included set of weights
-% %  that we trained on that. Specifically, you should complete the code in
-% %  cofiCostFunc.m to return J.
+%% ============ Part 2: Collaborative Filtering Cost Function ===========
+%  You will now implement the cost function for collaborative filtering.
+%  To help you debug your cost function, we have included set of weights
+%  that we trained on that. Specifically, you should complete the code in 
+%  cofiCostFunc.m to return J.
 
-% %  Load pre-trained weights (X, Theta, num_users, num_movies, num_features)
-% load ('ex8_movieParams.mat');
+%  Load pre-trained weights (X, Theta, num_users, num_movies, num_features)
+load ('ex8_movieParams.mat');
 
-% %  Reduce the data set size so that this runs faster
-% num_users = 4; num_movies = 5; num_features = 3;
-% X = X(1:num_movies, 1:num_features);
-% Theta = Theta(1:num_users, 1:num_features);
-% Y = Y(1:num_movies, 1:num_users);
-% R = R(1:num_movies, 1:num_users);
+%  Reduce the data set size so that this runs faster
+num_users = 4; num_movies = 5; num_features = 3;
+X = X(1:num_movies, 1:num_features);
+Theta = Theta(1:num_users, 1:num_features);
+Y = Y(1:num_movies, 1:num_users);
+R = R(1:num_movies, 1:num_users);
 
-% %  Evaluate cost function
-% J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
-%                num_features, 0);
+%  Evaluate cost function
+J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
+               num_features, 0);
            
-% fprintf(['Cost at loaded parameters: %f '...
-%          '\n(this value should be about 22.22)\n'], J);
+fprintf(['Cost at loaded parameters: %f '...
+         '\n(this value should be about 22.22)\n'], J);
 
-% fprintf('\nProgram paused. Press enter to continue.\n');
-% pause;
+fprintf('\nProgram paused. Press enter to continue.\n');
+pause;
 
 
 % %% ============== Part 3: Collaborative Filtering Gradient ==============
